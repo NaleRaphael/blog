@@ -115,6 +115,8 @@ theme_config:
   social_links:
     github: https://github.com/naleraphael
     mail: mailto:gmccntwxy@gmail.com
+  post:
+    show_updated: true
   colorscheme: dark
   highlight: hybrid.styl
   utterances:

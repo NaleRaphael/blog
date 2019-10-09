@@ -1,6 +1,6 @@
 ---
 title: "ECMA-262-3: chapter 3 - this"
-date: 2019-10-03 20:16:12
+date: 2019-09-27 15:28:13
 tags:
 - javascript
 ---
@@ -446,7 +446,7 @@ aBagOfSand.weightInKilogram()  // console: weight: 1.5 (kg)
 看完上述關於 `Reference` type 的內容後，可以發現提到的都是一般的[函數呼叫情況（... in a usual function call ...）](#section-this-value-in-function-call-quote-2)。
 
 那麼是否代表有所謂 **非一般的函數呼叫** 呢？
-其實就是指在 [`call parentheses ( ... )`](#anchor-call-parentheses) 的左側不是 [`Reference` type](#Reference-type) 的情況，如下範例所示：
+其實就是指在 [`call parentheses ( ... )`](#anchor-call-parentheses) 的左側不是 [`Reference` type](#reference-type) 的情況，如下範例所示：
 
 ```javascript
 // IIFE
@@ -757,6 +757,6 @@ a.apply({b: 30}, [40])  // console: 30, 40 (because `this` === {b: 30})
 
 ## Conclusion
 `this` 在 ECMAScript 的底層設計上看起來很複雜，但從我們實作的角度來看，要知道 `this` 的值其實不會很難。
-基本上從 [函數的呼叫形式](#section-this-value-in-function-call-quote-2) 就可以推算出來，只是要再考慮到其他如 [Function call and non-Reference type](#Function-call-and-non-Reference-type) 和 [Reference type and null this value](#Reference-type-and-null-this-value) ... 等比較特殊的情況而已。
+基本上從 [函數的呼叫形式](#section-this-value-in-function-call-quote-2) 就可以推算出來，只是要再考慮到其他如 [Function call and non-Reference type](#function-call-and-non-reference-type) 和 [Reference type and null this value](#reference-type-and-null-this-value) ... 等比較特殊的情況而已。
 
 當然，透過直接探索 ECMAScript specification 也能夠幫助我們更了解 `this` 的概念，像是：為什麼在我們使用 `new` 建立新物件時， `this` 的值會被自動綁定到新物件上。雖然 MDN 也有詳細的說明，但是相信對於希望能更了解根本原因的人，ECMAScript specification 絕對是個很適合的~~休閒讀物~~參考書！
