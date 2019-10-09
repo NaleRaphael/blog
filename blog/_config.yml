@@ -11,6 +11,10 @@ author: naleraphael
 language: en
 timezone: Asia/Taipei
 
+# Page
+page:
+  comments: true
+
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://naleraphael.github.io/
@@ -112,3 +116,10 @@ theme_config:
     github: https://github.com/naleraphael
     mail: mailto:gmccntwxy@gmail.com
   colorscheme: dark
+  highlight: hybrid.styl
+  utterances:
+    enable: true
+    repo: naleraphael/naleraphael.github.io
+    issue_term: pathname
+    label: Comment
+    theme: icy-dark
