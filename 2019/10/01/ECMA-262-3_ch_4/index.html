@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Little things matter">
 <meta property="og:description" content="原文連結：ECMA-262-3: chapter 4 - scope chain 以下內容會照著原文的架構書寫，並加入個人的解讀與其他相關的內容進去（定位不是翻譯文）。 Introduction  As we already know from the second chapter concerning the variable object, the data of an execution c">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-09T08:50:40.329Z">
+<meta property="og:updated_time" content="2019-10-09T14:18:31.369Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ECMA-262-3: chapter 4 - scope chain">
 <meta name="twitter:description" content="原文連結：ECMA-262-3: chapter 4 - scope chain 以下內容會照著原文的架構書寫，並加入個人的解讀與其他相關的內容進去（定位不是翻譯文）。 Introduction  As we already know from the second chapter concerning the variable object, the data of an execution c">
@@ -129,7 +129,7 @@
       
         <time datetime="2019-10-01T08:45:34.000Z" itemprop="datePublished">2019-10-01</time>
         
-        (Updated: <time datetime="2019-10-09T08:50:40.329Z" itemprop="dateModified">2019-10-09</time>)
+        (Updated: <time datetime="2019-10-09T14:18:31.369Z" itemprop="dateModified">2019-10-09</time>)
         
       
     </div>
@@ -206,7 +206,7 @@
 <li>
 <p>用 <code>array</code> 表示*：</p>
  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Scope = [VOn, ..., VO2, VO1]; <span class="comment">// scope chain</span></span><br></pre></td></tr></table></figure>
-<p>* 這邊 VO 的編號順序刻意與原文顛倒，是為了配合<a href="#Function-activation">下文</a>所述的 VO 建立順序（數字越小代表越外層，也就是越早被建立的 VO）</p>
+<p>* 這邊 VO 的編號順序刻意與原文顛倒，是為了配合<a href="#function-activation">下文</a>所述的 VO 建立順序（數字越小代表越外層，也就是越早被建立的 VO）</p>
 </li>
 <li>
 <p>用帶有 <code>__parent__</code> 的 <code>object</code> 表示：</p>
@@ -252,19 +252,19 @@
 <p>再來我們看上面這個範例的執行流程：</p>
 <ul>
 <li>
-<p>step_01: from the beginning; <code>foo</code> is created (<a href="#Function-creation">creating <code>foo.[[Scope]]</code></a>)</p>
+<p>step_01: from the beginning; <code>foo</code> is created (<a href="#function-creation">creating <code>foo.[[Scope]]</code></a>)</p>
   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// variable object of `global` context</span></span><br><span class="line">globalContext.VO = &#123;</span><br><span class="line">  x: <span class="number">10</span>,</span><br><span class="line">  foo: <span class="xml"><span class="tag">&lt;<span class="name">reference</span> <span class="attr">to</span> <span class="attr">function</span>&gt;</span></span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">// at `foo` creation</span></span><br><span class="line"><span class="xml">foo.[[Scope]] = [</span></span><br><span class="line"><span class="xml">  globalContext.VO</span></span><br><span class="line"><span class="xml">]</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p>step_02: After <code>foo</code> is called (creating creating activation object and <a href="#Function-activation">scope chain</a> of <code>fooContext</code>)</p>
+<p>step_02: After <code>foo</code> is called (creating creating activation object and <a href="#function-activation">scope chain</a> of <code>fooContext</code>)</p>
   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// activation object of `foo` context:</span></span><br><span class="line">fooContext.AO = &#123;</span><br><span class="line">  y: <span class="number">20</span>,</span><br><span class="line">  bar: <span class="xml"><span class="tag">&lt;<span class="name">reference</span> <span class="attr">to</span> <span class="attr">function</span>&gt;</span></span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">// scope chain of `foo` context:</span></span><br><span class="line"><span class="xml">fooContext.Scope = fooContext.AO + foo.[[Scope]]</span></span><br><span class="line"><span class="xml">// i.e.: </span></span><br><span class="line"><span class="xml">fooContext.Scope = [fooContext.AO, globalContext.VO]</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p>step_03: At creation of inner <code>bar</code> function (<a href="#Function-creation">creating <code>bar.[[Scope]]</code></a>)</p>
+<p>step_03: At creation of inner <code>bar</code> function (<a href="#function-creation">creating <code>bar.[[Scope]]</code></a>)</p>
   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bar.[[Scope]] = [</span><br><span class="line">  fooContext.AO,</span><br><span class="line">  globalContext.VO</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p>step_04: at <code>bar</code> function call (creating activation object and <a href="#Function-activation">scope chain</a> of <code>barContext</code>)</p>
+<p>step_04: at <code>bar</code> function call (creating activation object and <a href="#function-activation">scope chain</a> of <code>barContext</code>)</p>
   <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// activation object of `bar` object</span></span><br><span class="line">barContext.AO = &#123;</span><br><span class="line">  z: <span class="number">30</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// scope chain of `bar` context:</span></span><br><span class="line">barContext.Scope = barContext.AO + bar.[[Scope]]</span><br><span class="line"><span class="comment">// i.e.:</span></span><br><span class="line">barContext.Scope = [barContext.AO, fooContext.AO, globalContext.VO]</span><br></pre></td></tr></table></figure>
 </li>
 <li>
@@ -421,7 +421,7 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> catchObject = &#123;</span><br><span class="line">  ex: <span class="xml"><span class="tag">&lt;<span class="name">exception</span> <span class="attr">object</span>&gt;</span></span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">Scope = catchObject + AO|VO + [[Scope]]</span></span><br></pre></td></tr></table></figure>
 <p>而在離開 <code>catch</code> 區塊後， <code>catch</code> 所建立的 scope 也會被移除掉，因此最後一行的結果是 <code>ReferenceError</code>。</p>
 <h2 id="conclusion"><a class="header-anchor" href="#conclusion"></a>Conclusion</h2>
-<p>在這個章節裡，我們討論到了許多關於 scope chain 的細節。基本上只要記住函數的生命週期中，分別在<a href="#Function-creation">建立</a>與<a href="#Function-activation">被呼叫(啟動)</a>時會做什麼處理，那麼後續對於 JavaScript 的執行流程和結果就不會有太大的問題了！</p>
+<p>在這個章節裡，我們討論到了許多關於 scope chain 的細節。基本上只要記住函數的生命週期中，分別在<a href="#function-creation">建立</a>與<a href="#function-activation">被呼叫(啟動)</a>時會做什麼處理，那麼後續對於 JavaScript 的執行流程和結果就不會有太大的問題了！</p>
 
   </div>
 </article>

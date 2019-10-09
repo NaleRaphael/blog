@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Little things matter">
 <meta property="og:description" content="原文連結：ECMA-262-3: chapter 3 - this 以下內容會照著原文的架構書寫，並加入個人的解讀與其他相關的內容進去（定位不是翻譯文）。 Introduction  Many programmers are used to thinking that the this keyword in programming languages is closely related to t">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-09T08:51:28.704Z">
+<meta property="og:updated_time" content="2019-10-09T14:16:29.313Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ECMA-262-3: chapter 3 - this">
 <meta name="twitter:description" content="原文連結：ECMA-262-3: chapter 3 - this 以下內容會照著原文的架構書寫，並加入個人的解讀與其他相關的內容進去（定位不是翻譯文）。 Introduction  Many programmers are used to thinking that the this keyword in programming languages is closely related to t">
@@ -129,7 +129,7 @@
       
         <time datetime="2019-09-27T07:28:13.000Z" itemprop="datePublished">2019-09-27</time>
         
-        (Updated: <time datetime="2019-10-09T08:51:28.704Z" itemprop="dateModified">2019-10-09</time>)
+        (Updated: <time datetime="2019-10-09T14:16:29.313Z" itemprop="dateModified">2019-10-09</time>)
         
       
     </div>
@@ -273,7 +273,7 @@ JavaScript 中 <code>this</code> 會指向實作的上一層對象，而 Python 
 <h2 id="function-call-and-non-reference-type"><a class="header-anchor" href="#function-call-and-non-reference-type"></a>Function call and non-Reference type</h2>
 <p>看完上述關於 <code>Reference</code> type 的內容後，可以發現提到的都是一般的<a href="#section-this-value-in-function-call-quote-2">函數呼叫情況（… in a usual function call …）</a>。</p>
 <p>那麼是否代表有所謂 <strong>非一般的函數呼叫</strong> 呢？<br>
-其實就是指在 <a href="#anchor-call-parentheses"><code>call parentheses ( ... )</code></a> 的左側不是 <a href="#Reference-type"><code>Reference</code> type</a> 的情況，如下範例所示：</p>
+其實就是指在 <a href="#anchor-call-parentheses"><code>call parentheses ( ... )</code></a> 的左側不是 <a href="#reference-type"><code>Reference</code> type</a> 的情況，如下範例所示：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// IIFE</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">&#125;)()  <span class="comment">// output_1: ???</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Other complex exmaples</span></span><br><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  bar: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo.bar()  <span class="comment">// output_2: ???</span></span><br><span class="line">(foo.bar)()  <span class="comment">// output_3: ???</span></span><br><span class="line"></span><br><span class="line">(foo.bar = foo.bar)()  <span class="comment">// output_4: ???</span></span><br><span class="line">(<span class="literal">false</span> || foo.bar)()  <span class="comment">// output_5: ???</span></span><br><span class="line">(foo.bar, foo.bar)()  <span class="comment">// output_6: ???</span></span><br></pre></td></tr></table></figure>
 <details>
 <summary><span style="color: green; font-weight: bold">Click me to reveal the answer!</span></summary>
@@ -412,7 +412,7 @@ When the [[Construct]] property for a Function object <em>F</em> is called, the 
 <p>參考： <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Function/call" target="_blank" rel="noopener"><code>Function.prototype.call</code></a>, <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" target="_blank" rel="noopener"><code>Function.prototype.apply</code></a></p>
 <h2 id="conclusion"><a class="header-anchor" href="#conclusion"></a>Conclusion</h2>
 <p><code>this</code> 在 ECMAScript 的底層設計上看起來很複雜，但從我們實作的角度來看，要知道 <code>this</code> 的值其實不會很難。<br>
-基本上從 <a href="#section-this-value-in-function-call-quote-2">函數的呼叫形式</a> 就可以推算出來，只是要再考慮到其他如 <a href="#Function-call-and-non-Reference-type">Function call and non-Reference type</a> 和 <a href="#Reference-type-and-null-this-value">Reference type and null this value</a> … 等比較特殊的情況而已。</p>
+基本上從 <a href="#section-this-value-in-function-call-quote-2">函數的呼叫形式</a> 就可以推算出來，只是要再考慮到其他如 <a href="#function-call-and-non-reference-type">Function call and non-Reference type</a> 和 <a href="#reference-type-and-null-this-value">Reference type and null this value</a> … 等比較特殊的情況而已。</p>
 <p>當然，透過直接探索 ECMAScript specification 也能夠幫助我們更了解 <code>this</code> 的概念，像是：為什麼在我們使用 <code>new</code> 建立新物件時， <code>this</code> 的值會被自動綁定到新物件上。雖然 MDN 也有詳細的說明，但是相信對於希望能更了解根本原因的人，ECMAScript specification 絕對是個很適合的<s>休閒讀物</s>參考書！</p>
 
   </div>
