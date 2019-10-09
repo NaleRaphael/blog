@@ -10,11 +10,11 @@
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ECMA-262-3: chapter 3 - this">
-<meta property="og:url" content="https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/index.html">
+<meta property="og:url" content="https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/index.html">
 <meta property="og:site_name" content="Little things matter">
 <meta property="og:description" content="原文連結：ECMA-262-3: chapter 3 - this 以下內容會照著原文的架構書寫，並加入個人的解讀與其他相關的內容進去（定位不是翻譯文）。 Introduction  Many programmers are used to thinking that the this keyword in programming languages is closely related to t">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-08T15:12:19.062Z">
+<meta property="og:updated_time" content="2019-10-09T08:51:28.704Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ECMA-262-3: chapter 3 - this">
 <meta name="twitter:description" content="原文連結：ECMA-262-3: chapter 3 - this 以下內容會照著原文的架構書寫，並加入個人的解讀與其他相關的內容進去（定位不是翻譯文）。 Introduction  Many programmers are used to thinking that the this keyword in programming languages is closely related to t">
@@ -75,6 +75,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" href="/2019/10/01/ECMA-262-3_ch_4/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -87,16 +89,16 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&text=ECMA-262-3: chapter 3 - this"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&is_video=false&description=ECMA-262-3: chapter 3 - this"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=ECMA-262-3: chapter 3 - this&body=Check out this article: https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&name=ECMA-262-3: chapter 3 - this&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&text=ECMA-262-3: chapter 3 - this"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&is_video=false&description=ECMA-262-3: chapter 3 - this"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ECMA-262-3: chapter 3 - this&body=Check out this article: https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&name=ECMA-262-3: chapter 3 - this&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -125,7 +127,9 @@
       
     <div class="postdate">
       
-        <time datetime="2019-10-03T12:16:12.000Z" itemprop="datePublished">2019-10-03</time>
+        <time datetime="2019-09-27T07:28:13.000Z" itemprop="datePublished">2019-09-27</time>
+        
+        (Updated: <time datetime="2019-10-09T08:51:28.704Z" itemprop="dateModified">2019-10-09</time>)
         
       
     </div>
@@ -456,16 +460,16 @@ When the [[Construct]] property for a Function object <em>F</em> is called, the 
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://twitter.com/share?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&text=ECMA-262-3: chapter 3 - this"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&is_video=false&description=ECMA-262-3: chapter 3 - this"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=ECMA-262-3: chapter 3 - this&body=Check out this article: https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="https://getpocket.com/save?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://reddit.com/submit?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://digg.com/submit?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://naleraphael.github.io/2019/10/03/ECMA-262-3_ch_3/&name=ECMA-262-3: chapter 3 - this&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&text=ECMA-262-3: chapter 3 - this"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&is_video=false&description=ECMA-262-3: chapter 3 - this"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ECMA-262-3: chapter 3 - this&body=Check out this article: https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&title=ECMA-262-3: chapter 3 - this"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://naleraphael.github.io/2019/09/27/ECMA-262-3_ch_3/&name=ECMA-262-3: chapter 3 - this&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
