@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "check": "node ../scripts/check_fullwidth_spaces.js -d source/_posts/",
+    "clean": "hexo clean",
     "build": "hexo generate",
-    "run": "hexo generate && hexo server"
+    "server": "hexo generate && hexo server"
   },
   "hexo": {
     "version": "3.9.0"
@@ -23,5 +25,7 @@
     "hexo-server": "^0.3.3",
     "markdown-it-task-checkbox": "^1.0.6"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "commander": "^4.0.1"
+  }
 }

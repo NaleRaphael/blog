@@ -598,7 +598,7 @@ with ({
 
 > By the way, it relates not only to inner, but also to global functions because the `with` object *shadows** higher object (global or an activation object) of the scope chain
 
-\*　因為 `with` 內的物件會被優先搜索到，導致更上層 scope 中的物件會相對地被 *遮蓋掉*（對應到原文中的 `shadows`）
+\* 因為 `with` 內的物件會被優先搜索到，導致更上層 scope 中的物件會相對地被 *遮蓋掉*（對應到原文中的 `shadows`）
 
 [`With` statement | MDN]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with
 

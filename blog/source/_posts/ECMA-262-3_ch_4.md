@@ -308,7 +308,7 @@ foo()  // step_02
 
 
 ## Scope features
-以下內容則是討論在 ECMAScript 中，有哪些特色是和函數的 `[[Scope]]`　有關。
+以下內容則是討論在 ECMAScript 中，有哪些特色是和函數的 `[[Scope]]` 有關。
 
 ### Closures
 
