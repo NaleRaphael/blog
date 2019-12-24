@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Little things matter">
 <meta property="og:description" content="原文連結：ECMA-262-3: chapter 3 - this 以下內容會照著原文的架構書寫，並加入個人的解讀與其他相關的內容進去（定位不是翻譯文）。 Introduction  Many programmers are used to thinking that the this keyword in programming languages is closely related to t">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-09T14:16:29.313Z">
+<meta property="og:updated_time" content="2019-12-24T07:53:47.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ECMA-262-3: chapter 3 - this">
 <meta name="twitter:description" content="原文連結：ECMA-262-3: chapter 3 - this 以下內容會照著原文的架構書寫，並加入個人的解讀與其他相關的內容進去（定位不是翻譯文）。 Introduction  Many programmers are used to thinking that the this keyword in programming languages is closely related to t">
@@ -22,27 +22,27 @@
     
         
           
-              <link rel="shortcut icon" href="/images/favicon.ico">
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
           
         
         
           
-            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
           
         
         
           
-            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
           
         
     
     <!-- title -->
     <title>ECMA-262-3: chapter 3 - this</title>
     <!-- styles -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/blog/css/style.css">
     <!-- persian styles -->
     
-      <link rel="stylesheet" href="/css/rtl.css">
+      <link rel="stylesheet" href="/blog/css/rtl.css">
     
     <!-- rss -->
     
@@ -59,15 +59,15 @@
     <span id="nav">
       <ul>
          
-          <li><a href="/">Home</a></li>
+          <li><a href="/blog/">Home</a></li>
          
-          <li><a href="/about/">About</a></li>
+          <li><a href="/blog/about/">About</a></li>
          
-          <li><a href="/archives/">Writing</a></li>
+          <li><a href="/blog/archives/">Writing</a></li>
          
-          <li><a href="/tags/">tags</a></li>
+          <li><a href="/blog/tags/">tags</a></li>
          
-          <li><a href="/search/">Search</a></li>
+          <li><a href="/blog/search/">Search</a></li>
         
       </ul>
     </span>
@@ -75,7 +75,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" href="/2019/10/01/ECMA-262-3_ch_4/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" href="/blog/2019/10/01/ECMA-262-3_ch_4/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
@@ -129,7 +129,7 @@
       
         <time datetime="2019-09-27T07:28:13.000Z" itemprop="datePublished">2019-09-27</time>
         
-        (Updated: <time datetime="2019-10-09T14:16:29.313Z" itemprop="dateModified">2019-10-09</time>)
+        (Updated: <time datetime="2019-12-24T07:53:47.616Z" itemprop="dateModified">2019-12-24</time>)
         
       
     </div>
@@ -140,7 +140,7 @@
       
     <div class="article-tag">
         <i class="fas fa-tag"></i>
-        <a class="tag-link" href="/tags/javascript/">javascript</a>
+        <a class="tag-link" href="/blog/tags/javascript/">javascript</a>
     </div>
 
 
@@ -307,7 +307,7 @@ JavaScript 中 <code>this</code> 會指向實作的上一層對象，而 Python 
 <blockquote>
 <p>By the way, it relates not only to inner, but also to global functions because the <code>with</code> object <em>shadows</em>* higher object (global or an activation object) of the scope chain</p>
 </blockquote>
-<p>*　因為 <code>with</code> 內的物件會被優先搜索到，導致更上層 scope 中的物件會相對地被 <em>遮蓋掉</em>（對應到原文中的 <code>shadows</code>）</p>
+<p>* 因為 <code>with</code> 內的物件會被優先搜索到，導致更上層 scope 中的物件會相對地被 <em>遮蓋掉</em>（對應到原文中的 <code>shadows</code>）</p>
 <ol start="3">
 <li>In a <code>try ... catch ...</code> statement</li>
 </ol>
@@ -441,15 +441,15 @@ When the [[Construct]] property for a Function object <em>F</em> is called, the 
     <div id="nav-footer" style="display: none">
       <ul>
          
-          <li><a href="/">Home</a></li>
+          <li><a href="/blog/">Home</a></li>
          
-          <li><a href="/about/">About</a></li>
+          <li><a href="/blog/about/">About</a></li>
          
-          <li><a href="/archives/">Writing</a></li>
+          <li><a href="/blog/archives/">Writing</a></li>
          
-          <li><a href="/tags/">tags</a></li>
+          <li><a href="/blog/tags/">tags</a></li>
          
-          <li><a href="/search/">Search</a></li>
+          <li><a href="/blog/search/">Search</a></li>
         
       </ul>
     </div>
@@ -493,15 +493,15 @@ When the [[Construct]] property for a Function object <em>F</em> is called, the 
     <nav>
       <ul>
          
-          <li><a href="/">Home</a></li>
+          <li><a href="/blog/">Home</a></li>
          
-          <li><a href="/about/">About</a></li>
+          <li><a href="/blog/about/">About</a></li>
          
-          <li><a href="/archives/">Writing</a></li>
+          <li><a href="/blog/archives/">Writing</a></li>
          
-          <li><a href="/tags/">tags</a></li>
+          <li><a href="/blog/tags/">tags</a></li>
          
-          <li><a href="/search/">Search</a></li>
+          <li><a href="/blog/search/">Search</a></li>
         
       </ul>
     </nav>
@@ -510,15 +510,15 @@ When the [[Construct]] property for a Function object <em>F</em> is called, the 
 
     </div>
     <!-- styles -->
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
 
     <!-- jquery -->
-<script src="/lib/jquery/jquery.min.js"></script>
-<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
 <!-- clipboard -->
 
-  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script src="/blog/lib/clipboard/clipboard.min.js"></script>
   <script type="text/javascript">
   $(function() {
     // copy-btn HTML
@@ -539,7 +539,7 @@ When the [[Construct]] property for a Function object <em>F</em> is called, the 
   })
   </script>
 
-<script src="/js/main.js"></script>
+<script src="/blog/js/main.js"></script>
 <!-- search -->
 
 <!-- Google Analytics -->
