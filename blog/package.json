@@ -6,7 +6,8 @@
     "check": "node ../scripts/check_fullwidth_spaces.js -d source/_posts/",
     "clean": "hexo clean",
     "build": "hexo generate",
-    "server": "hexo generate && hexo server"
+    "server": "hexo generate && hexo server",
+    "deploy": "hexo deploy"
   },
   "hexo": {
     "version": "3.9.0"

@@ -41,7 +41,6 @@ Array.from(program.directory).map((entry) => {
     fs.readFile(fname, 'utf8', (err, data) => {
       if (err) { throw err }
       if (data.includes('\u3000')) {
-        checkFailed = true
         console.log(`Found full-width space in: ${fname}`)
       }
     })
