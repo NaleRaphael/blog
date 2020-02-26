@@ -121,7 +121,7 @@ theme_config:
   highlight: hybrid.styl
   utterances:
     enable: true
-    repo: naleraphael/naleraphael.github.io
+    repo: naleraphael/blog
     issue_term: pathname
     label: Comment
     theme: icy-dark
