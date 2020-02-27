@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Little things matter">
 <meta property="og:description" content="In the past few days, I was finding a solution for:  running tests with code coverage for a project targeting multiple Python versions automatically public and easily accessible coverage report  To me">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-27T06:21:32.203Z">
+<meta property="og:updated_time" content="2020-02-27T06:58:56.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hosting code coverage report for a project targeting multiple Python versions by Travis CI and Github Pages">
 <meta name="twitter:description" content="In the past few days, I was finding a solution for:  running tests with code coverage for a project targeting multiple Python versions automatically public and easily accessible coverage report  To me">
@@ -129,7 +129,7 @@
       
         <time datetime="2020-02-26T14:20:04.000Z" itemprop="datePublished">2020-02-26</time>
         
-        (Updated: <time datetime="2020-02-27T06:21:32.203Z" itemprop="dateModified">2020-02-27</time>)
+        (Updated: <time datetime="2020-02-27T06:58:56.664Z" itemprop="dateModified">2020-02-27</time>)
         
       
     </div>
@@ -177,20 +177,27 @@ It somehow seems that we are getting back to the starting point again. But, it i
 <p>There are few things worth noting:</p>
 <ul>
 <li>
-<p><code>setup_git_upstream</code><br>
-The reason why we need to do this is that</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git remote <span class="built_in">set</span>-url origin \</span><br><span class="line">    https://<span class="variable">$&#123;GITHUB_USER&#125;</span>:<span class="variable">$&#123;GITHUB_TOKEN&#125;</span>@github.com/<span class="variable">$&#123;GITHUB_USER&#125;</span>/<span class="variable">$&#123;GITHUB_REPO&#125;</span>.git</span><br></pre></td></tr></table></figure>
+<p><code>create_branch_for_coverage</code><br>
+We create <span style="color: orange">orphan branches</span> for tracking coverage files only. And the argument <code>--orphan</code> make these branches being history-independent to the main branch (master) of our project. It’s a cool technique for such purpose, and there are more <a href="https://stackoverflow.com/a/13203015" target="_blank" rel="noopener">cool use cases here</a>.</p>
 </li>
 <li>
-<p><code>create_branch_for_coverage</code><br>
-We create <strong>orphan branches</strong> for tracking coverage files only. And the argument <code>--orphan</code> make these branches being history-independent to the main branch (master) of our project. It’s a cool technique for such purpose, and there are more <a href="https://stackoverflow.com/a/13203015" target="_blank" rel="noopener">cool use cases here</a>.</p>
+<p><code>pull_branch_for_coverage</code><br>
+By default, Travis CI pulls only <span style="color: orange">one branch</span> into docker container of a job (if it is triggered by <code>master</code> branch, then it pulls that branch).<br>
+Therefore, to commit code coverage data to corresponding branch, we have to pull that branch to local first. And that’s why you can see this function is called in both <a href="https://github.com/NaleRaphael/travis-multi-py-coverage/blob/master/.travis/runtests.sh" target="_blank" rel="noopener">.travis/runtests.sh</a> and <a href="https://github.com/NaleRaphael/travis-multi-py-coverage/blob/master/.travis/gen_report.sh" target="_blank" rel="noopener">.travis/gen_report.sh</a>.</p>
 </li>
 <li>
 <p><code>commit_artifacts</code><br>
-Here is a argument of git-commit which is necessary for this workflow: <code>--allow-empty</code>.</p>
+Argument <code>--allow-empty</code> in command <code>git-commit</code> is necessary for this workflow, because there might be no changes in code coverage. e.g. commits for fixing typo, documentation…</p>
   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="title">commit_artifacts</span></span>() &#123;</span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">    git commit -q --allow-empty -m <span class="string">"Travis build: <span class="variable">$TRAVIS_BUILD_NUMBER</span>"</span></span><br><span class="line">    <span class="comment"># ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
+<li>
+<p>use argument <code>-q</code> to silence output message<br>
+<span style="color: red">For security reasons.</span> As <a href="https://gist.github.com/willprice/e07efd73fb7f13f917ea#gistcomment-1845535" target="_blank" rel="noopener">this comment</a> from that post created by willprice.</p>
+</li>
 </ul>
+<p>After setting up all these things and push them to Github, Travis should be ready and work normally. And you can check the coverage report hosted on Github Pages of your repository (which should be <code>https://[your_github_user_name].github.io/[repo_name]</code>)</p>
+<hr>
+<p>In conclusion, it is a nice experience for me to explore more things related to continuous intergration and Git. Though it might not be a elegant solution, but it did make me learn many things from it.</p>
 
   </div>
 </article>
