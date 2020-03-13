@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.9.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="// sys.settrace(callback)sys_settrace(PyObject *self, PyObject *args) &amp;#123;    if (args == Py_None)        PyEval_SetTrace(NULL, NULL);    else        // args: your Python callback function        Py">
+<meta name="keywords" content="devlog,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dive into `sys.settrace()`">
+<meta property="og:url" content="https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/index.html">
+<meta property="og:site_name" content="Little things matter">
+<meta property="og:description" content="// sys.settrace(callback)sys_settrace(PyObject *self, PyObject *args) &amp;#123;    if (args == Py_None)        PyEval_SetTrace(NULL, NULL);    else        // args: your Python callback function        Py">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-13T03:41:06.852Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dive into `sys.settrace()`">
+<meta name="twitter:description" content="// sys.settrace(callback)sys_settrace(PyObject *self, PyObject *args) &amp;#123;    if (args == Py_None)        PyEval_SetTrace(NULL, NULL);    else        // args: your Python callback function        Py">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/blog/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/blog/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Dive into `sys.settrace()`</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/blog/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/blog/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="/blog/tags/">tags</a></li>
+         
+          <li><a href="/blog/search/">Search</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/blog/2020/03/11/devlog_create_a_builtin_frame_object/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&text=Dive into `sys.settrace()`"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&title=Dive into `sys.settrace()`"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&is_video=false&description=Dive into `sys.settrace()`"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Dive into `sys.settrace()`&body=Check out this article: https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&title=Dive into `sys.settrace()`"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&title=Dive into `sys.settrace()`"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&title=Dive into `sys.settrace()`"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&title=Dive into `sys.settrace()`"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&name=Dive into `sys.settrace()`&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#in-bytefall"><span class="toc-number">1.</span> <span class="toc-text">In bytefall</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#how-to-trace-per-opcode-execution"><span class="toc-number">2.</span> <span class="toc-text">How to trace per opcode execution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Dive into `sys.settrace()`
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Little things matter</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-13T03:37:13.000Z" itemprop="datePublished">2020-03-13</time>
+        
+        (Updated: <time datetime="2020-03-13T03:41:06.852Z" itemprop="dateModified">2020-03-13</time>)
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/blog/tags/devlog/">devlog</a>, <a class="tag-link" href="/blog/tags/python/">python</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// sys.settrace(callback)</span></span><br><span class="line">sys_settrace(PyObject *self, PyObject *args) &#123;</span><br><span class="line">    <span class="keyword">if</span> (args == Py_None)</span><br><span class="line">        PyEval_SetTrace(<span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="comment">// args: your Python callback function</span></span><br><span class="line">        PyEval_SetTrace(trace_trampoline, args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">trace_trampoline(PyObject *self, PyFrameObject *frame,</span><br><span class="line">                 <span class="keyword">int</span> what, PyObject *arg) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// Determine the callback function</span></span><br><span class="line">    <span class="keyword">if</span> (what == PyTrace_CALL)</span><br><span class="line">        callback = self;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        callback = frame-&gt;f_trace;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    result = call_trampoline(callback, frame, what, arg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">PyEval_SetTrace(Py_tracefunc func, PyObject *arg) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    tstate-&gt;c_tracefunc = func;   <span class="comment">// trace_trampoline</span></span><br><span class="line">    tstate-&gt;c_traceobj = arg;     <span class="comment">// your Python callback function</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// called when a new frame is pushed (before the entire dispatch loop)</span></span><br><span class="line"><span class="comment">// or after entering `fast_yield` block</span></span><br><span class="line">call_trace_protected(Py_tracefunc func, PyObject *obj,</span><br><span class="line">                     PyThreadState *tstate, PyFrameObject *frame,</span><br><span class="line">                     <span class="keyword">int</span> what, PyObject *arg) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    err = call_trace(func, obj, tstate, frame, what, arg);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// calling</span></span><br><span class="line">call_trace_protected(tstate-&gt;c_tracefunc,</span><br><span class="line">                     tstate-&gt;c_traceobj,</span><br><span class="line">                     tstate, f, PyTrace_CALL, Py_None) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    err = call_trace(</span><br><span class="line">        tstate-&gt;c_tracefunc,</span><br><span class="line">        tstate-&gt;c_traceobj,</span><br><span class="line">        tstate, f, PyTrace_CALL, Py_None</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">call_trace(Py_tracefunc func, PyObject *obj,</span><br><span class="line">           PyThreadState *tstate, PyFrameObject *frame,</span><br><span class="line">           <span class="keyword">int</span> what, PyObject *arg) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    result = func(obj, frame, what, arg);</span><br><span class="line">    <span class="comment">// -&gt;</span></span><br><span class="line">    <span class="comment">// result = trace_trampoline(py_callback, frame, what, arg)</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">maybe_call_line_trace(Py_tracefunc func, PyObject *obj,</span><br><span class="line">                      PyThreadState *tstate, PyFrameObject *frame,</span><br><span class="line">                      <span class="keyword">int</span> *instr_lb, <span class="keyword">int</span> *instr_ub, <span class="keyword">int</span> *instr_prev)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> line = frame-&gt;f_lineno;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* If the last instruction executed isn't in the current</span></span><br><span class="line"><span class="comment">       instruction window, reset the window.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">if</span> (frame-&gt;f_lasti &lt; *instr_lb || frame-&gt;f_lasti &gt;= *instr_ub) &#123;</span><br><span class="line">        PyAddrPair bounds;</span><br><span class="line">        line = _PyCode_CheckLineNumber(frame-&gt;f_code, frame-&gt;f_lasti,</span><br><span class="line">                                       &amp;bounds);</span><br><span class="line">        *instr_lb = bounds.ap_lower;</span><br><span class="line">        *instr_ub = bounds.ap_upper;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* If the last instruction falls at the start of a line or if it</span></span><br><span class="line"><span class="comment">       represents a jump backwards, update the frame's line number and</span></span><br><span class="line"><span class="comment">       then call the trace function if we're tracing source lines.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">if</span> ((frame-&gt;f_lasti == *instr_lb || frame-&gt;f_lasti &lt; *instr_prev)) &#123;</span><br><span class="line">        frame-&gt;f_lineno = line;</span><br><span class="line">        <span class="keyword">if</span> (frame-&gt;f_trace_lines) &#123;</span><br><span class="line">            result = call_trace(func, obj, tstate, frame, PyTrace_LINE, Py_None);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* Always emit an opcode event if we're tracing all opcodes. */</span></span><br><span class="line">    <span class="keyword">if</span> (frame-&gt;f_trace_opcodes) &#123;</span><br><span class="line">        result = call_trace(func, obj, tstate, frame, PyTrace_OPCODE, Py_None);</span><br><span class="line">    &#125;</span><br><span class="line">    *instr_prev = frame-&gt;f_lasti;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="in-bytefall"><a class="header-anchor" href="#in-bytefall"></a>In <code>bytefall</code></h2>
+<p><code>fast_next_opcode</code> -&gt; <code>maybe_call_line_trace</code> called in <code>vm.dispatch()</code></p>
+<h2 id="how-to-trace-per-opcode-execution"><a class="header-anchor" href="#how-to-trace-per-opcode-execution"></a>How to trace per opcode execution</h2>
+<p>f_trace_opcode</p>
+<h2 id="reference"><a class="header-anchor" href="#reference"></a>Reference</h2>
+<p><a href="https://nedbatchelder.com/text/trace-function.html" target="_blank" rel="noopener">https://nedbatchelder.com/text/trace-function.html</a></p>
+
+  </div>
+</article>
+
+    <div class="comments" id="comments">
+        
+    <script src="https://utteranc.es/client.js"
+        repo="naleraphael/blog"
+        issue-term="pathname"
+        label="Comment"
+        theme="icy-dark"
+        crossorigin="anonymous"
+        async>
+    </script>
+
+
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="/blog/tags/">tags</a></li>
+         
+          <li><a href="/blog/search/">Search</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#in-bytefall"><span class="toc-number">1.</span> <span class="toc-text">In bytefall</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#how-to-trace-per-opcode-execution"><span class="toc-number">2.</span> <span class="toc-text">How to trace per opcode execution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&text=Dive into `sys.settrace()`"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&title=Dive into `sys.settrace()`"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&is_video=false&description=Dive into `sys.settrace()`"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Dive into `sys.settrace()`&body=Check out this article: https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&title=Dive into `sys.settrace()`"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&title=Dive into `sys.settrace()`"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&title=Dive into `sys.settrace()`"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&title=Dive into `sys.settrace()`"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://naleraphael.github.io/2020/03/13/devlog_dive_into_sys_settrace/&name=Dive into `sys.settrace()`&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 naleraphael
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/blog/">Home</a></li>
+         
+          <li><a href="/blog/about/">About</a></li>
+         
+          <li><a href="/blog/archives/">Writing</a></li>
+         
+          <li><a href="/blog/tags/">tags</a></li>
+         
+          <li><a href="/blog/search/">Search</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/blog/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/blog/lib/jquery/jquery.min.js"></script>
+<script src="/blog/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/blog/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/blog/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
