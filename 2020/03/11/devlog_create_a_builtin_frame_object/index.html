@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Little things matter">
 <meta property="og:description" content="Recently, I ran into a problem about using pdb in bytefall (a Python virtual machine implemented in Python). It’s not a bug-like problem, but just a curiousity-triggered one. pdb worked fine in bytefa">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-16T04:17:31.230Z">
+<meta property="og:updated_time" content="2020-07-24T20:13:05.498Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How to create a built-in `frame` object in Python?">
 <meta name="twitter:description" content="Recently, I ran into a problem about using pdb in bytefall (a Python virtual machine implemented in Python). It’s not a bug-like problem, but just a curiousity-triggered one. pdb worked fine in bytefa">
@@ -49,7 +49,9 @@
     
 </head>
 
-<body class="max-width mx-auto px3 ltr">
+
+<body class="max-width mx-left px3 ltr">
+
     
       <div id="header-post">
   <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
@@ -124,14 +126,14 @@
 
     <div class="meta">
       <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">Little things matter</span>
+        <span itemprop="name">naleraphael</span>
       </span>
       
     <div class="postdate">
       
         <time datetime="2020-03-11T13:21:38.000Z" itemprop="datePublished">2020-03-11</time>
         
-        (Updated: <time datetime="2020-03-16T04:17:31.230Z" itemprop="dateModified">2020-03-16</time>)
+        (Updated: <time datetime="2020-07-24T20:13:05.498Z" itemprop="dateModified">2020-07-25</time>)
         
       
     </div>
@@ -203,7 +205,7 @@ This bit is set when the type can be used as the base type of another type. If t
 <p>Let’s start doing this step by step (to avoid confusion and being affected by the changes among versions, here we are taking CPython 3.7 as the runtime):</p>
 <ol>
 <li>
-<p>Accordint to point 1, we should rewrite the code above into this:</p>
+<p>According to point 1, we should rewrite the code above into this:</p>
  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> ctypes</span><br><span class="line"></span><br><span class="line">ctypes.pythonapi.PyFrame_New.argtypes = (</span><br><span class="line">    ...,    <span class="comment"># PyThreadState*</span></span><br><span class="line">    ...,    <span class="comment"># PyCodeObject*</span></span><br><span class="line">    ...,    <span class="comment"># PyObject*</span></span><br><span class="line">    ...     <span class="comment"># PyObject*</span></span><br><span class="line">)</span><br><span class="line">ctypes.pythonapi.PyFrame_New.restype = (</span><br><span class="line">    ...     <span class="comment"># PyFrameObject*</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">frame = ctypes.pythonapi.PyFrame_New(</span><br><span class="line">    ...,    <span class="comment"># thread state</span></span><br><span class="line">    ...,    <span class="comment"># a code object</span></span><br><span class="line">    ...,    <span class="comment"># a dict of globals</span></span><br><span class="line">    ...     <span class="comment"># a dict of locals</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p>But there is a problem: “Except <code>ctypes.py_object</code>, there are no other types of Python object defined as <code>py_threadstate</code>, <code>py_codeobject</code> and <code>py_frameobject</code>.”</p>
 <p>Typically, we have to define some classes inheriting <code>ctypes.Structure</code> with <code>_fields_</code> in which all members of those internal types are defined. Then assign those classes to <code>argtypes</code> and <code>restype</code>. Take <code>PyThreadState</code> as an example, we have to deal with <a href="https://github.com/python/cpython/blob/97e92dbba9d7840a5068d7878d1393d36229882b/Include/pystate.h#L212-L304" target="_blank" rel="noopener"><strong>THESE THINGS</strong></a>.</p>
