@@ -164,7 +164,7 @@ It sounds like a reasonable guess, so let's start to take a quick look at the im
     Remember what the signature of `trace_dispatch()` looks like? The last 3 arguments are the same as those in signatures of `trace_trampoline()` and `call_trampoline()`.
     So, based on these implementation and function signatures, we can speculate that `trace_trampoline()` would play a role of invoking callback function while it is triggered.
 
-    But still, these 2 C-functions are not used to control frame stack. There is one remaining function for us to keep investigate: `PyEval_SetTrace()`.
+    But still, these 2 C-functions are not used to control frame stack. There is one remaining function for us to keep investigating: `PyEval_SetTrace()`.
 
 4. Prefix of `PyEval_SetTrace()` indicating that this function is related to the bytecode dispatching loop locating in `ceval.c`, and here is a sketch of it:
     ```cpp

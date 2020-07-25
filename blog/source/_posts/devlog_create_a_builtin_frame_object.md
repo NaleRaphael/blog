@@ -98,7 +98,7 @@ There are a few things worth noting:
     Compatibility and robustness of our implementation should be taken care of.
 
 Let's start doing this step by step (to avoid confusion and being affected by the changes among versions, here we are taking CPython 3.7 as the runtime):
-1. Accordint to point 1, we should rewrite the code above into this:
+1. According to point 1, we should rewrite the code above into this:
     ```python
     import ctypes
 

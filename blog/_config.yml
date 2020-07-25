@@ -126,3 +126,4 @@ theme_config:
     label: Comment
     theme: icy-dark
   tags_overview: false
+  page_width: 60rem
