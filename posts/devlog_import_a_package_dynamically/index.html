@@ -15,7 +15,7 @@
 <meta property="og:description" content="Dynamically import a module at runtime by its own location is a useful trick when there is something have to run on demand, but which cannot be determined at design time and even it’s not installed in">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://i.kym-cdn.com/entries/icons/mobile/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg">
-<meta property="og:updated_time" content="2020-09-17T07:06:00.402Z">
+<meta property="og:updated_time" content="2020-09-19T02:36:04.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Import a local Python package dynamically by its path">
 <meta name="twitter:description" content="Dynamically import a module at runtime by its own location is a useful trick when there is something have to run on demand, but which cannot be determined at design time and even it’s not installed in">
@@ -137,7 +137,7 @@
       
         <time datetime="2020-09-11T04:51:49.000Z" itemprop="datePublished">2020-09-11</time>
         
-        (Updated: <time datetime="2020-09-17T07:06:00.402Z" itemprop="dateModified">2020-09-17</time>)
+        (Updated: <time datetime="2020-09-19T02:36:04.911Z" itemprop="dateModified">2020-09-19</time>)
         
       
     </div>
@@ -215,7 +215,7 @@ However, we will get this error when we try import <code>my_module</code>:</p>
 </ul>
 <p>What we are interested in is <code>PathFinder</code> because we are solving an issue resulted by importing a normal module. And <code>sys.path</code> is also more suspectful than <code>__path__</code> attributes to be investigated further now.</p>
 <p><a name="anchor_cause_assumption"></a><br>
-As we’ve known that <code>sys.path</code> is a list containing paths of package including those ones from site-package and so on, the problem is obviously resulted by the absence name <code>mod_foo</code> in <code>sys.path</code>. In other words, this <code>ModuleNotFoundError</code> is raised because it failed to find <code>mod_foo</code> in <code>sys.path</code> even we had imported it manually by <code>importlib.util</code>.</p>
+As we’ve known that <code>sys.path</code> is a list containing paths of package including those ones from site-package and so on, the problem is obviously resulted by the absent name <code>mod_foo</code> in <code>sys.path</code>. In other words, this <code>ModuleNotFoundError</code> is raised because it failed to find <code>mod_foo</code> in <code>sys.path</code> even we had imported it manually by <code>importlib.util</code>.</p>
 <h2 id="let-s-try-to-solve-it"><a class="header-anchor" href="#let-s-try-to-solve-it"></a>Let’s try to solve it</h2>
 <p>Now we have figured out the cause of this error. But how can we solve it?</p>
 <p>Let’s recall <a href="#anchor_snippet_load_module">what have been done when we are trying to load <code>mod_foo</code></a>:</p>
@@ -228,7 +228,7 @@ As we’ve known that <code>sys.path</code> is a list containing paths of packag
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in mod_foo.__init__.py</span></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"><span class="keyword">import</span> pdb; pdb.set_trace()     <span class="comment"># &lt;- add this</span></span><br><span class="line"><span class="keyword">from</span> mod_foo.core <span class="keyword">import</span> *</span><br></pre></td></tr></table></figure>
 <p>As we re-run the command for importing <code>my_module</code>, program will stop at the line where the breakpoint is set. And remember the <a href="#anchor_cause_assumption">cause</a> assumed in previous section? Now we can check whether path of <code>mod_foo</code> exisits in <code>sys.path</code> by the following commands:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(pdb) <span class="keyword">import</span> sys;</span><br><span class="line">(pdb) <span class="keyword">for</span> v <span class="keyword">in</span> sys.path: print(v)</span><br><span class="line"><span class="comment"># ... lots of path will be printed here ...</span></span><br></pre></td></tr></table></figure>
-<p>Bingo, path of <code>mod_foo</code> is actually absence in <code>sys.path</code>. Therefore, we can try to insert that path into <code>sys.path</code> and check whether it would work.</p>
+<p>Bingo, path of <code>mod_foo</code> is actually absent in <code>sys.path</code>. Therefore, we can try to insert that path into <code>sys.path</code> and check whether it would work.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># continue from previous session</span></span><br><span class="line">(pdb) <span class="keyword">import</span> os.path <span class="keyword">as</span> osp</span><br><span class="line">(pdb) sys.path.insert(<span class="number">0</span>, osp.dirname(__file__))</span><br><span class="line"></span><br><span class="line"><span class="comment"># try to import `mod_foo`</span></span><br><span class="line">(pdb) <span class="keyword">import</span> mod_foo    <span class="comment"># -&gt; import successfully</span></span><br></pre></td></tr></table></figure>
 <p>Great! It actually works. But since it’s usually not recommended to manipulate <code>sys.path</code> directly even though it would be reset after re-runing your program, we have to implement another better solution.</p>
 <h2 id="a-better-solution"><a class="header-anchor" href="#a-better-solution"></a>A better solution</h2>
