@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://naleraphael.github.io/posts/devlog_import_a_package_dynamically/</loc>
+    
+    <lastmod>2020-09-17</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/posts/devlog_create_a_builtin_frame_object/</loc>
+    
+    <lastmod>2020-07-25</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/posts/devlog_things_behind_sys_settrace/</loc>
+    
+    <lastmod>2020-03-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/posts/travis_ci_for_multi_py_coverage/</loc>
+    
+    <lastmod>2020-03-13</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/about/index.html</loc>
+    
+    <lastmod>2019-12-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/posts/ECMA-262-3_ch_4/</loc>
+    
+    <lastmod>2019-12-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/posts/ECMA-262-3_ch_3/</loc>
+    
+    <lastmod>2019-12-24</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/tags/index.html</loc>
+    
+    <lastmod>2019-10-11</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/search/index.html</loc>
+    
+    <lastmod>2019-10-08</lastmod>
+    
+  </url>
+  
+
+  <url>
+    <loc>https://naleraphael.github.io/</loc>
+    <lastmod>2020-09-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>https://naleraphael.github.io/tags/javascript/</loc>
+    <lastmod>2020-09-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/tags/devlog/</loc>
+    <lastmod>2020-09-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/tags/python/</loc>
+    <lastmod>2020-09-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/tags/note/</loc>
+    <lastmod>2020-09-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://naleraphael.github.io/tags/ci/</loc>
+    <lastmod>2020-09-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  
+</urlset>
