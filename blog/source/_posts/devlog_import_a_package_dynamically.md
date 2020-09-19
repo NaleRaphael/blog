@@ -227,7 +227,7 @@ Thanks for these well-named classes, it's easy to figure out what they are respo
 What we are interested in is `PathFinder` because we are solving an issue resulted by importing a normal module. And `sys.path` is also more suspectful than `__path__` attributes to be investigated further now.
 
 <a name='anchor_cause_assumption'></a>
-As we've known that `sys.path` is a list containing paths of package including those ones from site-package and so on, the problem is obviously resulted by the absence name `mod_foo` in `sys.path`. In other words, this `ModuleNotFoundError` is raised because it failed to find `mod_foo` in `sys.path` even we had imported it manually by `importlib.util`.
+As we've known that `sys.path` is a list containing paths of package including those ones from site-package and so on, the problem is obviously resulted by the absent name `mod_foo` in `sys.path`. In other words, this `ModuleNotFoundError` is raised because it failed to find `mod_foo` in `sys.path` even we had imported it manually by `importlib.util`.
 
 
 ## Let's try to solve it
@@ -255,7 +255,7 @@ As we re-run the command for importing `my_module`, program will stop at the lin
 # ... lots of path will be printed here ...
 ```
 
-Bingo, path of `mod_foo` is actually absence in `sys.path`. Therefore, we can try to insert that path into `sys.path` and check whether it would work.
+Bingo, path of `mod_foo` is actually absent in `sys.path`. Therefore, we can try to insert that path into `sys.path` and check whether it would work.
 
 ```python
 # continue from previous session
