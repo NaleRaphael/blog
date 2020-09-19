@@ -19,7 +19,7 @@ page:
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://naleraphael.github.io/
 root: /blog/
-permalink: :year/:month/:day/:title/
+permalink: posts/:title/
 permalink_defaults:
 
 # Directory
@@ -127,3 +127,13 @@ theme_config:
     theme: icy-dark
   tags_overview: false
   page_width: 60rem
+  google_site_verification:
+    enabled: true
+    value: csFkwHyknLPxNjkvXl2VnRGqRUpMd4-NFd49LnpCtSg
+
+sitemap:
+  path: sitemap.xml
+  template: ./plugins/sitemap_gen/sitemap_template.xml
+  rel: false
+  tags: true
+  categories: false
