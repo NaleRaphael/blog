@@ -3,3 +3,4 @@ Allow: /
 Allow: /archives/
 Allow: /categories/
 Allow: /tags/
+Sitemap: https://naleraphael.github.io/blog/sitemap.xml
